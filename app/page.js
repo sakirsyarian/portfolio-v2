@@ -1,113 +1,109 @@
+import Link from "next/link";
 import Image from "next/image";
 
-export default function Home() {
+import { useFetch } from "@/hook/useFetch";
+import { Button } from "@/components/ui/button";
+
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Action from "@/components/Action";
+import SkillList from "@/components/SkillList";
+import ProjectList from "@/components/ProjectList";
+
+export default async function Home() {
+  const { data: about } = await useFetch("about");
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
+    <>
+      {/* header */}
+      <Navbar />
+
+      {/* content */}
+      <div className="container">
+        {/* hero */}
+        <div className="space-y-10 pb-24 pt-24">
+          <div className="space-y-8 text-center">
+            <div className="text-4xl font-bold lg:text-5xl">
+              <h1 className="leading-snug">
+                Hey there, I&apos;m Sarian. <br className="hidden md:block" />
+                <span className="text-[#69B4FF]">Full Stack Developer</span>
+              </h1>
+            </div>
+
+            <div className="mx-auto space-y-5">
+              <p className="mx-auto w-auto lg:w-4/6">
+                {about.attributes.description}
+              </p>
+
+              <div className="flex justify-center gap-3">
+                <Button className="bg-[#69B4FF] hover:bg-[#409fff] dark:bg-[#69B4FF] dark:text-white dark:hover:bg-[#409fff]">
+                  <Link
+                    href="https://linkedin.com/in/sakirsyarian/"
+                    target="_blank"
+                  >
+                    Linkedlln
+                  </Link>
+                </Button>
+                <Button className="dark:bg-[#2D2D2D] dark:text-white dark:hover:bg-[#2D2D2D]">
+                  <Link href="#projects">Projects</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-center">
             <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+              className="h-96 w-full rounded-lg bg-center object-cover"
+              src={about.attributes.image.data.attributes.url}
+              alt="about"
+              width={1024}
+              height={768}
+              priority={true}
             />
-          </a>
+          </div>
         </div>
+
+        {/* skill */}
+        <div className="space-y-8 py-24">
+          <div className="space-y-5">
+            <h2 className="text-3xl font-semibold">My Skills</h2>
+            <p>Tools and frameworks that I frequently use in my projects</p>
+          </div>
+
+          <div className="md:grid-col-6 grid grid-cols-2 gap-5 lg:grid-cols-8">
+            <SkillList />
+          </div>
+        </div>
+
+        {/* project */}
+        <div id="projects" className="space-y-8 py-24">
+          <div className="space-y-5 text-center">
+            <h2 className="text-3xl font-semibold">Featured Projects</h2>
+            <p>
+              Please take a moment to explore my recent projects and discover
+              what I&apos;ve been busy working on!
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+            <ProjectList limit={2} />
+          </div>
+
+          <div className="flex justify-center">
+            <Link href="/projects">
+              <Button className="dark:bg-[#2D2D2D] dark:text-white dark:hover:bg-[#2D2D2D]">
+                View all
+              </Button>
+            </Link>
+          </div>
+        </div>
+
+        {/* cta */}
+        <Action />
       </div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      {/* footer */}
+      <Footer />
+    </>
   );
 }
